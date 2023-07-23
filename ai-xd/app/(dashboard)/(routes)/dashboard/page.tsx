@@ -24,7 +24,7 @@ import { MessageSquare } from "lucide-react";
       </p>
      </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-4"></div>
-      {tools.map((tool) => (
+      {tools.map((tool) => ( !2:13pm
 
       ))}
    </div>
