@@ -102,6 +102,9 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                         </form>
                     </Form>
                     <div className="space-y-4 mt-4">
+                        {messages.length === 0 && !isLoading &&(
+                            </Empty>
+                        )}
                         <div className="flex flex-col-reverse gap-y-4">
                             {messages.map((messages) =>(
                                 <div key ={messages.content}>

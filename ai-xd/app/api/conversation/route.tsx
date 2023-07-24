@@ -12,7 +12,7 @@ const openai = new OpenAIApi(configuration);
 export async function POST(
     req:Request
 ) {
-    try {
+    try { 
         const { userId } = auth();
         const body = await req.json();
         const { messages } = body;
