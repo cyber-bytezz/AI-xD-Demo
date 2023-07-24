@@ -1,11 +1,13 @@
 "use client";
 
+
 import * as z from "zod";
 import { Heading } from "@/components/heading";
 import { MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { FormField,
          Form ,
          FormItem, 
@@ -13,8 +15,14 @@ import { FormField,
         } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChatCompletionRequestMessage } from "openai";
 
-function CoversationPage() {
+const CoversationPage = () => {
+    const router = useRouter();
+    const [messages , setMessages] = useState<ChatCompletionRequestMessage[]> 52;29
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -25,7 +33,13 @@ function CoversationPage() {
 const isLoading = form.formState.isSubmitting;
 
 const onSubmit = async (values : z.infer<typeof formSchema>) => {
-    console.log(values);
+    try{
+
+    } catch (error : any){
+        console.log(error);
+    }finally{
+        router.refresh();
+    }
 };
 
 
