@@ -19,7 +19,7 @@ const routes = [
         color: "text-sky-500",
     },
     {
-        lable: "Coversation",
+        lable: "Conversation",
         icon :MessageSquare,
         href: "/conversation",
         color: "text-violet-500",

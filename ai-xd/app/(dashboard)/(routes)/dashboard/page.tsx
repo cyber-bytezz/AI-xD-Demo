@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
     icon:MessageSquare,
     color:"text-violet-500",
     bgcolor:"bg-violet-500/10",
-    href:"/coversation"
+    href:"/conversation"
   },
   {
     lable:"Music Genneration",
