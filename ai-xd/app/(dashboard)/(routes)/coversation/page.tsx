@@ -21,7 +21,7 @@ import { ChatCompletionRequestMessage } from "openai";
 
 const CoversationPage = () => {
     const router = useRouter();
-    const [messages , setMessages] = useState<ChatCompletionRequestMessage[]> 52;29
+    const [messages , setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -34,8 +34,21 @@ const isLoading = form.formState.isSubmitting;
 
 const onSubmit = async (values : z.infer<typeof formSchema>) => {
     try{
+        const userMessage : ChatCompletionRequestMessage = {
+            role: "user",
+            content: values.prompt,
+        };
+        const newMessage = [...messages, userMessage];
 
+        const response = await axios.post("/api/coversation",{
+            messages :newMessage,
+        });
+
+        setMessages((current) => [...current, userMessage , response.data]);
+
+        form.reset();
     } catch (error : any){
+        //To-Do:Open Pro Model
         console.log(error);
     }finally{
         router.refresh();
@@ -89,7 +102,14 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                         </form>
                     </Form>
                     <div className="space-y-4 mt-4">
-                        Messages Content
+                        <div className="flex flex-col-reverse gap-y-4">
+                            {messages.map((messages) =>(
+                                <div key ={messages.content}>
+                                    {messages.content}
+                                </div>
+                            ))}
+
+                        </div>
                     </div>
                 </div>
             </div>
