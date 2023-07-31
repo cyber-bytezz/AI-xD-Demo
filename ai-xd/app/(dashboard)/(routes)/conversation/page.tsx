@@ -18,6 +18,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChatCompletionRequestMessage } from "openai";
+import { Empty } from "@/components/empty";
+import { Loader } from "@/components/loader";
+import { cn } from "@/lib/utils";
+import { UserAvatar } from "@/components/user-avatar";
+import { BotAvatar } from "@/components/bot-avatar";
 
 const CoversationPage = () => {
     const router = useRouter();
@@ -102,13 +107,27 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                         </form>
                     </Form>
                     <div className="space-y-4 mt-4">
+                        {true && (
+                            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+                                <Loader/>
+                                </div>
+                        )}
                         {messages.length === 0 && !isLoading &&(
-                            </Empty>
+                            <Empty label="No Conversation Started"/>
                         )}
                         <div className="flex flex-col-reverse gap-y-4">
-                            {messages.map((messages) =>(
-                                <div key ={messages.content}>
-                                    {messages.content}
+                            {messages.map((message) =>(
+                                <div 
+                                key ={message.content}
+                                className={cn(
+                                    "p-8 w-full flex items-start gap-x-8 roundded-lg",
+                                    message.role === "user" ? "bg-white border border-black/10" : "bg-mutes"
+                                    )}
+                                    >
+                                    {message.role === "user" ? <UserAvatar/>:
+                                    <BotAvatar/>}
+                                    <p className="text-sm"></p>
+                                    {message.content}
                                 </div>
                             ))}
 
