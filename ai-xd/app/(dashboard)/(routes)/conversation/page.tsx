@@ -45,7 +45,7 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
         };
         const newMessage = [...messages, userMessage];
 
-        const response = await axios.post("/api/coversation",{
+        const response = await axios.post("/api/conversation",{
             messages :newMessage,
         });
 
