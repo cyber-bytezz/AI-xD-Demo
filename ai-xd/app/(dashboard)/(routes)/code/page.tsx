@@ -3,7 +3,7 @@
 
 import * as z from "zod";
 import { Heading } from "@/components/heading";
-import { MessageSquare } from "lucide-react";
+import { Code } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,8 +23,8 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/user-avatar";
 import { BotAvatar } from "@/components/bot-avatar";
-
-const CoversationPage = () => {
+import ReactMarkdown from "react-markdown";
+const CodePage = () => {
     const router = useRouter();
     const [messages , setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
@@ -45,7 +45,7 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
         };
         const newMessage = [...messages, userMessage];
 
-        const response = await axios.post("/api/conversation",{
+        const response = await axios.post("/api/code",{
             messages :newMessage,
         });
 
@@ -64,11 +64,11 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
     return (
         <div>
             <Heading
-                title="Conversation"
-                description="Our Most Advance Convaersation model"
-                icon={MessageSquare}
-                iconColor="text-violet-500"
-                bgColor="bg-violet-500/10" />
+                title="Code Generation"
+                description="Generate Code Using Sentences"
+                icon={Code}
+                iconColor="text-green-700"
+                bgColor="bg-green-700/10" />
             <div className="px-4 lg:px-8">
                 <div>
                     <Form {...form}>
@@ -96,7 +96,7 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                                                         focus-visible:ring-0
                                                          focus-visible:ring-transparant" 
                                                              disabled={isLoading}
-                                                 placeholder="How do I Calculate the power of Thanos?"
+                                                 placeholder="Create A Contol Function Nav-bar Using Java-Script!"
                                                 {...field}/>
                                     </FormControl>
                                 </FormItem>
@@ -126,8 +126,9 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                                     >
                                     {message.role === "user" ? <UserAvatar/>:
                                     <BotAvatar/>}
-                                    <p className="text-sm"></p>
-                                    {message.content}
+                                    <ReactMarkdown>
+                                        {message.content || ""}
+                                    </ReactMarkdown>
                                 </div>
                             ))}
 
@@ -139,4 +140,4 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
     );
 }
 
-export default CoversationPage;
+export default CodePage;

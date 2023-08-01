@@ -14,5 +14,5 @@ export const Loader = () => {
                 AI-xD Thinking..
             </p>
         </div>
-    )
-}
+    );
+};
