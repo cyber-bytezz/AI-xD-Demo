@@ -17,12 +17,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Empty } from "@/components/empty";
 import { Loader } from "@/components/loader";
-import  { Music } from "lucide-react";
+import  { Video, VideoIcon } from "lucide-react";
  
 
-const MusicPage = () => {
+const VideoPage = () => {
     const router = useRouter();
-    const [music , setMusic] = useState<string>();
+    const [Video , setVideo] = useState<string>();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -35,11 +35,11 @@ const isLoading = form.formState.isSubmitting;
 
 const onSubmit = async (values : z.infer<typeof formSchema>) => {
     try{
-        setMusic(undefined);
+        setVideo(undefined);
 
-        const response = await axios.post("/api/Music",values);
+        const response = await axios.post("/api/Video",values);
 
-        setMusic: (response.data.audio);
+        setVideo: (response.data.data[0]);
         form.reset();
     } catch (error : any){
         //To-Do:Open Pro Model
@@ -53,11 +53,11 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
     return (
         <div>
             <Heading
-                title="Music Generation"
-                description="Prompt Your Music"
-                icon={Music}
-                iconColor="text-emerald-500"
-                bgColor="bg-emerald-500/10" />
+                title="Video Generation"
+                description="Prompt Your Video"
+                icon={VideoIcon}
+                iconColor="text-orange-700"
+                bgColor="bg-orange-700/10" />
             <div className="px-4 lg:px-8">
                 <div>
                     <Form {...form}>
@@ -85,7 +85,7 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                                                         focus-visible:ring-0
                                                          focus-visible:ring-transparant" 
                                                              disabled={isLoading}
-                                                 placeholder="Marshmello Music"
+                                                 placeholder="Funny"
                                                 {...field}/>
                                     </FormControl>
                                 </FormItem>
@@ -102,13 +102,13 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
                                 <Loader/>
                                 </div>
                         )}
-                        {!music && !isLoading &&(
+                        {!Video && !isLoading &&(
                             <Empty label="No Music Generated"/>
                         )}
-                        {music && (
-                            <audio controls className="w-full mt-8" >
-                                <source src={music}/>
-                            </audio>
+                        {Video && (
+                             <video className="wfull aspectvideo mt8 roundedlg border bgblack" controls>
+                                <source src="{video}"/>
+                             </video>
                         )}
                 </div>
             </div>
@@ -116,4 +116,4 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
     );
 };
 
-export default MusicPage;
+export default VideoPage;
