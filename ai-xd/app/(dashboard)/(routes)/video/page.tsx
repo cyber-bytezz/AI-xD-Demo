@@ -18,9 +18,11 @@ import { useState } from "react";
 import { Empty } from "@/components/empty";
 import { Loader } from "@/components/loader";
 import  { Video, VideoIcon } from "lucide-react";
+import { useProModal } from "@/hooks/use-promodal";
  
 
 const VideoPage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [Video , setVideo] = useState<string>();
 
@@ -42,8 +44,9 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
         setVideo: (response.data.data[0]);
         form.reset();
     } catch (error : any){
-        //To-Do:Open Pro Model
-        console.log(error);
+        if (error?.response?.status ===403) {
+            proModal.onOpen();
+         }
     }finally{
         router.refresh();
     }

@@ -23,8 +23,11 @@ import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/user-avatar";
 import { BotAvatar } from "@/components/bot-avatar";
+import { useProModal } from "@/hooks/use-promodal";
+
 
 const CoversationPage = () => {
+     const proModal = useProModal();
     const router = useRouter();
     const [messages , setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
@@ -53,8 +56,9 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
 
         form.reset();
     } catch (error : any){
-        //To-Do:Open Pro Model
-        console.log(error);
+         if(error?.response?.status === 403){
+            proModal.onOpen();
+         }
     }finally{
         router.refresh();
     }

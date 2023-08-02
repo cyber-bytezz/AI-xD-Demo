@@ -18,9 +18,11 @@ import { useState } from "react";
 import { Empty } from "@/components/empty";
 import { Loader } from "@/components/loader";
 import  { Music } from "lucide-react";
+import { useProModal } from "@/hooks/use-promodal";
  
 
 const MusicPage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [music , setMusic] = useState<string>();
 
@@ -42,8 +44,9 @@ const onSubmit = async (values : z.infer<typeof formSchema>) => {
         setMusic: (response.data.audio);
         form.reset();
     } catch (error : any){
-        //To-Do:Open Pro Model
-        console.log(error);
+         if (error?.response?.status ===403) {
+            proModal.onOpen();
+         }
     }finally{
         router.refresh();
     }
