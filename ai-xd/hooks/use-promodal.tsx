@@ -1,13 +1,13 @@
 import {create } from "zustand";
 
-interface useProModelStore {
+interface useProModalStore {
     isOpen:boolean;
     onOpen:() => void;
     onClose:() => void;
 };
 
-export const useProModel = create<useProModelStore>((set)=>({
-    isOpen:false,
+export const useProModal = create<useProModalStore>((set)=>({
+    isOpen:true,
     onOpen:() => set({isOpen:true}),
     onClose:()=> set({isOpen:false}),
 }))
